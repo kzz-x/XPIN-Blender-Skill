@@ -28,7 +28,7 @@
 
 先读 `AGENTS.md`，再按任务渐进加载。不要默认扫描整个 references。
 
-完整镜头重点按需读取：`references/workflows/dynamic-previs.md`（动态导演/时间）和 `references/workflows/render-ae-handoff.md`（预算/材质/分层/AE）。
+完整镜头重点按需读取：`.agents/skills/chadian-blender/references/workflows/dynamic-previs.md`（动态导演/时间）和 `.agents/skills/chadian-blender/references/workflows/render-ae-handoff.md`（预算/材质/分层/AE）。
 
 ## Blender 与 AE 的对应关系
 
