@@ -38,12 +38,13 @@
 - **Patch First**：能局部改，不重建。
 - **Preserve Manual Work**：保护人工 F-Curve、Action、Driver、Constraint、Parent、Modifier、Node、材质、灯光与命名。
 - 用户说“当前 / 这个 / 选中的” → 实时读取 selection，不猜。
+- **Art / Motion Direction First**：从零的三维镜头先确认视觉、空间调度、运镜/主体动作及口播事件，再进入昂贵精修。
 - **Editable First**：成片之外必须留下正常可编辑的 Blender 工程。
 - **No Dense Keys**：除 Tracking / Simulation / Mocap / Bake 等合理场景外，禁止逐帧或高密度写 Transform Key。
 - **Relationships should be encoded**：能用 Parent / Constraint / Driver / Target / Path 表达的关系，不手工同步多套 key。
 - **Animation ≠ Adjustment**：动画和人工调整分离。
 - **Native Control First**：Custom Properties / Drivers / Constraints / Nodes 优先；Python 不应成为日常微调的唯一入口。
-- 默认不完整高质量渲染；先用代表帧 / viewport preview 验收。
+- 默认不完整高质量渲染；先用动态 Previs 与代表帧验收。最终渲染优先遵守用户时间预算（默认目标 90 分钟，须测试评估）。
 - 写后必须回读关键状态；脚本“执行成功” ≠ 工程正确。
 
 ## 4｜Visual / Asset
@@ -55,10 +56,10 @@
 ## 5｜AI / Human 分工
 
 默认：
-- AI：Scene / Model Assembly / Material / Lighting / Composition / Rig / Controls / 参数化 / 简单持续动画；
-- Human：复杂 Camera Path、复杂多段主动画、最终 Graph、节奏精修。
+- AI：主动提出三维镜头语言，设计 Camera + Object + Focus/Light 与精确叙事时序；交付可编辑 Previs、场景、Rig、控件与画质优化。
+- Human：确认动态预演，必要时接管复杂 Camera Path / Graph 和最后节奏。
 
-除非叙事确实需要，不为了“显得高级”堆复杂运镜。
+不以二维思维固定镜头，也不为“显得高级”堆无意义复杂动作。
 
 ## 6｜Context Budget｜渐进加载硬规则
 
