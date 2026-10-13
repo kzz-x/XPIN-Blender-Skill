@@ -9,7 +9,7 @@ description: 模块化 Blender 生产 Skill。用于完整场景、复杂 Motion
 
 目标：
 
-**视觉完成度高 + Blender 原生可编辑 + 少量有意义的关键帧 + 人工易改 + 模板可复用 + Agent 成本可控。**
+**艺术指导与动态镜头质量优先 + Blender 原生可编辑 + 少量有意义的关键帧 + 人工易改 + 模板可复用 + Agent 成本可控。**
 
 ## 0｜Progressive Loading
 
@@ -40,11 +40,17 @@ description: 模块化 Blender 生产 Skill。用于完整场景、复杂 Motion
 - 差点控件 / N Panel / Custom Properties / Drivers / Preset → `references/engineering/chadian-controls.md`
 - Collection / 命名 / Scene Rig / Camera Rig / 工程结构 → `references/engineering/project-architecture.md`
 
+### 导演与预演
+- 从零三维镜头 / 口播时间点 / 运镜编排 / 动态关键帧 / 三维空间感 → `references/workflows/dynamic-previs.md`
+
 ### Motion
 - 多对象共享运动 / Follow / Attach / Target / Camera / Path / Constraint → `references/motion/motion-rigging.md`
 
 ### 视觉
 - 中高视觉复杂度、构图/材质/灯光未锁定；或需要模型 / HDRI / Texture 等 → `references/workflows/visual-anchor-asset-first.md`
+
+### 渲染与 AE 交接
+- Eevee / Cycles、90 分钟预算、玻璃、性能、分层/蒙版、摄像机往返 AE → `references/workflows/render-ae-handoff.md`
 
 ### 模板
 - 要“做成模板 / 以后直接复用 / 做成控件” → `recipes/reusable-template.md`
@@ -79,8 +85,8 @@ description: 模块化 Blender 生产 Skill。用于完整场景、复杂 Motion
 
 禁止用大量 key 代替曲线。
 
-**复杂 Camera / 多段主动画默认允许人工接管。**
-AI 优先搭 Camera Rig、Target、Focus、简单 Dolly/Orbit 和可调参数，不必强行自动完成所有曲线。
+**AI 应主动设计三维空间调度与镜头语言，而非只做二维排版或静态旋转。**
+先用可编辑 Camera Rig、Target、Focus、运动分段和动态 Previs 验证；复杂主曲线可在审核后由人工精修。
 
 ## 5｜Editable Skeleton
 
@@ -128,23 +134,21 @@ Motion Ownership：
 ## 7｜视觉与资产
 
 从零的中高复杂度镜头：
-- 先锁 Visual Anchor；
-- 图不满意，不进入昂贵 BUILD；
+- 先锁 Visual Anchor，再以完整动态 Previs 验证镜头运动与时间；
+- 图或动态预演不满意，不进入昂贵 BUILD；
 - 已有 Anchor 不重复生成；
 - 模型 / HDRI / Texture / Material / Logo / 产品资源优先搜成熟资产；
 - AI 建模优先用于抽象几何、定制结构或没有合适资产的部分。
 
 ## 8｜复杂执行
 
-1. 读取必要场景状态。
-2. Recovery Point。
-3. 锁 Visual / Asset 输入（若命中）。
-4. 先搭 Engineering Skeleton。
-5. 先做 Primary Motion。
-6. 做 Editable QA。
-7. 再加 Secondary Motion / Detail / Polish。
-8. 少量代表帧或 Preview 验收。
-9. 模板任务最后再做控件、Preset、资产替换接口。
+1. 读取必要场景状态，已有工程先保护 Recovery Point。
+2. 锁定 Visual / Asset 输入；若是完整镜头，编排口播事件、摄影机/物体/焦点运动。
+3. 搭轻量 Engineering Skeleton + Proxy，制作**全时长动态 Previs**，审核视差、景别、节奏、遮挡与信息落点。
+4. Previs 通过后完成 Primary Motion、Editable QA，再精修资产、材质、光影与 Secondary Motion。
+5. 代表帧测试 Eevee / Cycles 与渲染成本；按时间预算优化，不直接启动昂贵全片渲染。
+6. 按实际 AE 合成需要输出分层/蒙版/相机数据，检验交接帧。
+7. 模板任务将已确认的高频修改项做成控件、Preset、资产替换接口。
 
 不要一开始就把所有对象、所有参数、所有 UI 都工程化。
 
@@ -160,6 +164,9 @@ Motion Ownership：
 - 主要控制入口 30 秒内能找到；
 - 差点控件只暴露真正会改的参数；
 - 工程脱离 Agent 仍能正常打开、理解、继续调整；
+- 完整镜头已通过动态 Previs，关键时间点与口播对齐且能方便重定时；
+- 最终渲染方案经过代表帧测速，遵循预算或明确报告超时风险；
+- 需要 AE 合成时，摄影机/时间/Pass/遮罩已验证对齐；
 - 未经授权没有高成本完整渲染。
 
 一句话：
