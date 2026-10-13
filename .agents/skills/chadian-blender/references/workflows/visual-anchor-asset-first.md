@@ -15,7 +15,7 @@
 
 已有参考图 / Blockout / 已批准关键帧 → 直接作为视觉真值。
 
-**图不满意，不进入昂贵 BUILD。**
+**图不满意，不进入昂贵 BUILD。** 完整动画还需动态 Previs：静态关键帧不能验证空间运动、节奏和遮挡。参见 `dynamic-previs.md`。
 
 如果任务属于平面设计、3D/2.5D、软件/UI 等“电脑生成设计视觉”，GPT 生图明显偏写实时，优先建议使用 Banana 做 Visual Anchor，再进入 Blender。
 
@@ -40,7 +40,7 @@
 5. AI / Blender 自制；
 6. Placeholder。
 
-抽象几何、独特造型、没有成熟资产的部分再原创。
+抽象几何、独特造型、没有成熟资产的部分再原创。复用模型后优先局部改造；参数化阵列和解体等可用 Blender Python / Geometry Nodes，避免为了代码化而重建成熟几何。
 
 ## 3｜正式 BUILD 前
 
@@ -55,7 +55,7 @@
 
 视觉锁定后：
 - AI 可以搭场景、材质、灯光、构图、Rig；
-- 动画默认先做简单主 Motion；
-- 复杂 Graph / Camera Path 可以人工精修。
+- AI 主动设计空间调度、Camera/Subject/Focus 的动态预演；
+- 复杂 Graph / Camera Path 在确认后可以人工精修。
 
 **简单但正确 > 复杂但失控。**
