@@ -27,9 +27,9 @@
 
 适合：
 - 主体位置 / 尺度
-- Camera Distance / Lens
+- Camera Distance / Lens / Orbit Strength
 - 主色 / 强调色
-- Motion Speed / Strength
+- Motion Speed / Strength / 有实际绑定的关键事件时间
 - Stagger
 - Light Strength
 - Background
@@ -40,8 +40,9 @@
 适合：
 - 布局间距
 - 每组 Offset
-- Path Bend
+- Path Bend / Camera Target
 - Overshoot / Settle
+- 动作阶段进度 / 起止时机
 - DOF / Focus
 - Material roughness / emission
 - 几何密度 / thickness
@@ -58,7 +59,7 @@
 - Render / Sampling
 - Debug
 
-**不要把“能暴露”误当成“应该暴露”。**
+**不要把“能暴露”误当成“应该暴露”。** 完整镜头在 Previs 阶段先提供少量 Camera、Motion、Timing 控制；画面和节奏通过后再完善模板级 UI。
 
 ---
 
@@ -254,6 +255,7 @@ Schema 的意义是**统一“人要改什么”**，不是强制三个平台内
 - Asset。
 
 并且：
+- Camera 距离/环绕幅度、物体动作强度、Focus、关键事件时机等控件确实改变工程结果，不能只改 UI 文本；
 - 调控件不破坏主动画；
 - 工程不开 Panel 脚本也不应整体报废；
 - Preset 可恢复；
