@@ -99,7 +99,7 @@ Timeline Marker 用于：
 - `SETTLE`
 - `OUT`
 
-Marker 是语义锚点，不代替真正 Timing Graph。
+Marker 是语义锚点，不代替真正 Timing Graph；只有实际建立与 Driver/Progress、Action/NLA 时间映射或重建脚本的联系，改 Marker 才会连带重定时动画。
 
 ## 7｜Python 边界
 
