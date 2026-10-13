@@ -1,40 +1,81 @@
-# XPIN Blender｜AI 三维制作准则
+# XPIN Blender Skill Routing
 
-> 唯一入口。用于三维镜头设计、Blender 建模/动画/渲染、Codex 协作和模板制作。**目标是成熟的影视级 Motion Design：审美与叙事 > 动态质量 > 参考还原 > 可编辑性 > 工程便利。**规则服务结果，不限制更好的创意与技术路线。
+本仓库提供两套 Blender Skill。目标：**能力不缩水，但默认上下文尽可能小。**
 
-## 1. 先判断任务
-- **只需设计**：交付可执行的视觉方案、空间调度、时间事件和必要的生图/预演提示词；不假装操作了 Blender。
-- **制作/修改工程**：先读取当前场景、选中对象和必要依赖；对已有内容优先局部修改，保护人工动画、Rig、材质与灯光。首次高风险修改先保存可恢复版本；写后回读、预览验证，脚本成功不等于画面正确。
-- **省上下文**：本文件即全部通用规则。仅在具体问题出现时查 Blender 官方文档、相关插件/API/项目资料；不预读整套仓库或生成冗长计划。
+## 1｜先选 Skill
 
-## 2. 艺术指导与资产优先
-- 从文案、参考图片/视频或自然语言主动推导专业风格、镜头语言与检索词；主动寻找成熟商业成片、开源案例和已有模板，不要求用户先掌握术语。允许借鉴、组合和创新，不盲目复刻实现方式。
-- 中高视觉复杂度先确定 **Visual Anchor**：画面构图、比例、材质、灯光、空间层次与审美标准。已有确认的参考图直接沿用；适合电脑设计感、3D/2.5D 视觉时可优先用 Banana 做关键帧参考。
-- **Asset First**：当前工程/本地库 → 官方与可授权模型、HDRI、材质、贴图 → 开源资产 → 必要时原创建模。真实硬件/产品优先结构可信；抽象几何、阵列、拆解、碎片等可用 Python 或 Geometry Nodes 参数化。
-- 不满足参考质量就继续优化美术方向，不能以“技术上做到了”替代成片质感。
+默认使用 `chadian-blender-mini`：
+- 选中对象 / 单对象 / 少量对象；
+- 改 Transform、材质、颜色、文字、灯光；
+- 简单 M0–M1 动画；
+- 普通局部 Patch；
+- 已有结构下的小修。
 
-## 3. 先导演三维运动，再制作
-- 避免把二维版式直接摆进三维空间。主动编排**摄影机路径、主体运动、前中后景视差、遮挡与空间揭示、景别、焦点、光影变化**；让三维感服务叙事，不靠无意义旋转或复杂运镜堆砌。
-- 镜头设计同时考虑 **Camera（Dolly/Orbit/Truck/Crane/Follow/Reveal）+ Object（展开/错层/重组/形变）+ Focus/Light**。可以从“一段清晰主运镜 + 一段关键主体动作”起步，实际复杂度由优秀参考和信息需求决定。
-- 依据口播、字幕或时间码给出精简的 **Shot/Event**：`时间/Marker｜信息重点｜机位/运镜/景别｜物体动作与空间关系｜焦点/灯光/文字`。明确入场、揭示、停顿、信息落点、退场；未知时点标“暂定”，不伪造精确同步。
-- **静态 Anchor 不等于动态确认**。完整镜头先搭真实空间的轻量 Blockout、Camera Rig 与低成本**全时长动态 Previs**，检查视差、镜头速度、过渡、穿模/遮挡、对焦、可读时间。动态方案确认后，再做精模、最终材质灯光、复杂 FX 与昂贵渲染；预演锁定创作意图，技术实现仍可升级。
+直接使用 `chadian-blender`：
+- 从零完整场景 / 镜头；
+- 中高视觉复杂度、Visual Anchor、Reference / Asset Search；
+- 多对象 Motion、Camera、Rig、Constraints、Drivers、Geometry Nodes；
+- 明确要求后续人工易改、少关键帧、模板化；
+- 新建 N Panel / Custom Properties / “差点控件”；
+- 复杂 Python、结构重构、Asset Browser / Library 体系；
+- 完整工程审计或深度 Debug。
 
-## 4. 原生可编辑工程
-- **共享运动归上层，个体运动留局部，人工调整与动画分离。** 合理使用 Empty/Parent、Constraint、Target/Path、Driver、Custom Properties、Geometry Nodes、Action/NLA，而不是给多个对象复制相同 Key。
-- 摄影机建议分离 `RIG_CAMERA`、Aim Target、Focus Target 与局部构图 Offset；全局/组运动由 Rig 承担。对应关系应真实绑定：移动目标后 Follow/Look At/Focus 仍能工作。
-- 普通 A→B 从 **2 个主关键帧 + Bezier F-Curve** 开始；需要预备、超调、落定再增关键姿态。除追踪/模拟/烘焙等必要情况，不用逐帧密集 Transform Key 模拟缓动。主曲线应方便在 Graph Editor 调节。
-- 时间事件可用 `IN / REVEAL / FOCUS / SETTLE / OUT` Marker 组织；改 Marker **不会天然移动 Key**，如需口播改动同步，须建立真实的 Progress/Driver、Action/NLA 重映射或更新机制。
-- 当明确需要人工常改或模板复用时，设置 `CTRL_MASTER` + **5–15 个**真正有价值的中文控件（镜头、主体、时间、强度、灯光、材质、资产）。数据存在 .blend 的 Custom Properties/节点等原生结构中；N Panel 只是界面，Python 主要负责创建、批处理与一次性操作。控件必须实际改变场景、保存后有效；日常微调不依赖 AI 再运行脚本。复杂参数折叠，不提前工程化所有东西。
+**明显命中 Full 时不要先读 Mini。**
 
-## 5. 质感与性能一起设计
-- 依据目标画面选择 Eevee/Cycles，不按习惯一键切换：Eevee 可适合技术插画、工业图形、HUD/快预演；Cycles 常用于复杂反射、透射、写实微距。切引擎后重新核对材质、透明、阴影、Pass 与画面。
-- 高级质感优先**可信模型、厚度/倒角、尺度细节、材质粗糙度、软箱及轮廓布光、反射层次、接触阴影、景深与色彩管理**；只对影响最终画面的部分增加真实感和成本。特别检查玻璃、金属、体积光、细线抗锯齿及动画时序闪烁。
-- 默认**不直接全片高质量渲染**。先对简/中/复杂代表帧测速，按帧数与额外开销预测总时长；无另行要求时以约 **90 分钟总渲染目标**规划，不作未经测速的承诺。超预算先调整最小损失观感的项目，再复测。
+## 2｜直接操作 Blender 前
 
-## 6. 交付、AE 协作与复用
-- 交付可继续手调的 `.blend`、必要的预览与依赖；重要阶段保留 checkpoint，长任务留下简短 HANDOFF（文件、完成状态、待办、渲染设置），防止会话/Agent 切换丢失进度。
-- 要进 AE 合成时，按需要输出 Beauty/Alpha、对象遮罩、Shadow、Emission、Depth、Cryptomatte 等可用 Pass（优先测试多层 EXR）；核对帧率、分辨率、首帧、坐标、摄影机、景深、颜色管理，**先测试代表帧在 AE 中是否对齐**。不假设 AE/Blender 摄影机、表达式、灯光等天然无损互通。可编辑字卡/HUD 视需求留给 AE。
-- 用户要求“做成模板”时，视觉通过后才做资产替换槽、少量高频控件、Preset/Asset Browser 与预览；替换 Hero 不应破坏相机、Rig、材质接口。
-- **验收看结果**：画面与动态达到参考水准；口播事件正确；手动改镜头、目标、主体、时间、灯光时关系仍成立；渲染估算有测试依据；最终文件脱离 Agent 可正常打开和继续工作。重要问题优先修视觉与运动，再修工程细节。
+只咨询、出方案、解释时不要求连接 Blender。
 
-> 长期维护原则：新经验优先**合并、替换、压缩**现有条目，只保留可迁移、显著减少返工的规则；不要把故障史、讨论过程、无关禁令、冗长教程不断追加进来。
+要直接读取 / 修改 / 制作 Blender：
+- 使用当前可用的 Blender MCP / Python / Agent 工具读取真实状态；
+- 未连接时不得假装已修改；
+- 修改现有 .blend 前先确认 Recovery Point；
+- 高风险操作优先复制对象 / Collection / 文件，或保留可回退状态。
+
+## 3｜永远生效的底线
+
+- **Read Before Write**：只读当前任务需要的真实状态。
+- **Patch First**：能局部改，不重建。
+- **Preserve Manual Work**：保护人工 F-Curve、Action、Driver、Constraint、Parent、Modifier、Node、材质、灯光与命名。
+- 用户说“当前 / 这个 / 选中的” → 实时读取 selection，不猜。
+- **Art / Motion Direction First**：从零的三维镜头先确认视觉、空间调度、运镜/主体动作及口播事件，再进入昂贵精修。
+- **Editable First**：成片之外必须留下正常可编辑的 Blender 工程。
+- **No Dense Keys**：除 Tracking / Simulation / Mocap / Bake 等合理场景外，禁止逐帧或高密度写 Transform Key。
+- **Relationships should be encoded**：能用 Parent / Constraint / Driver / Target / Path 表达的关系，不手工同步多套 key。
+- **Animation ≠ Adjustment**：动画和人工调整分离。
+- **Native Control First**：Custom Properties / Drivers / Constraints / Nodes 优先；Python 不应成为日常微调的唯一入口。
+- 默认不完整高质量渲染；先用动态 Previs 与代表帧验收。最终渲染优先遵守用户时间预算（默认目标 90 分钟，须测试评估）。
+- 写后必须回读关键状态；脚本“执行成功” ≠ 工程正确。
+
+## 4｜Visual / Asset
+
+中高视觉复杂度默认先锁 Visual Anchor。已有准确参考图 / Blockout / 已批准关键帧就直接复用。
+
+模型、HDRI、Texture、Material、Logo、产品资产等现实中高度可能已有成熟资产的内容，优先 Asset First。
+
+## 5｜AI / Human 分工
+
+默认：
+- AI：主动提出三维镜头语言，设计 Camera + Object + Focus/Light 与精确叙事时序；交付可编辑 Previs、场景、Rig、控件与画质优化。
+- Human：确认动态预演，必要时接管复杂 Camera Path / Graph 和最后节奏。
+
+不以二维思维固定镜头，也不为“显得高级”堆无意义复杂动作。
+
+## 6｜Context Budget｜渐进加载硬规则
+
+**不要预读整个 references。**
+
+- Mini：除 Mini `SKILL.md` 外默认读取 0 个 reference。
+- Full：先只读 Full `SKILL.md`；执行前默认新增 0–2 个直接命中的 reference / recipe。
+- 足够执行就停止读取。
+- 同一会话已读过的文件不重复读取，除非内容变化。
+- 故障文档只在真实故障出现后加载。
+- 模板 / 控件任务才读对应模块。
+
+默认路径：
+
+`AGENTS → Mini → Tool`
+
+复杂任务：
+
+`AGENTS → Full → 命中的 1–2 个模块 → Tool`
