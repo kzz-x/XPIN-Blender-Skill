@@ -38,7 +38,8 @@
 - **Patch First**：能局部改，不重建。
 - **Preserve Manual Work**：保护人工 F-Curve、Action、Driver、Constraint、Parent、Modifier、Node、材质、灯光与命名。
 - 用户说“当前 / 这个 / 选中的” → 实时读取 selection，不猜。
-- **Art / Motion Direction First**：从零的三维镜头先确认视觉、空间调度、运镜/主体动作及口播事件，再进入昂贵精修。
+- **Art / Motion / Edit Direction First**：从零的三维镜头先确认视觉、空间调度、运镜/主体动作、景别与机位变化、切镜和口播事件，再进入昂贵精修。
+- **Shot Sequence First**：多镜头段落按信息重点规划全/中/近/特写及运动/静止反差；该切就切、该连贯就连贯，不默认一镜到底或匀速推拉。先审核剪辑后的完整动态 Previs。
 - **Editable First**：成片之外必须留下正常可编辑的 Blender 工程。
 - **No Dense Keys**：除 Tracking / Simulation / Mocap / Bake 等合理场景外，禁止逐帧或高密度写 Transform Key。
 - **Relationships should be encoded**：能用 Parent / Constraint / Driver / Target / Path 表达的关系，不手工同步多套 key。
@@ -56,8 +57,8 @@
 ## 5｜AI / Human 分工
 
 默认：
-- AI：主动提出三维镜头语言，设计 Camera + Object + Focus/Light 与精确叙事时序；交付可编辑 Previs、场景、Rig、控件与画质优化。
-- Human：确认动态预演，必要时接管复杂 Camera Path / Graph 和最后节奏。
+- AI：主动设计镜头组（景别、机位、切点、运镜及动静快慢），编排 Camera + Object + Focus/Light 与口播时序；交付可编辑、已组接的完整动态 Previs、场景、Rig、控件与画质优化。
+- Human：确认整段预演的视觉叙事及切镜节奏，必要时接管复杂 Camera Path / Graph 和最终剪辑。
 
 不以二维思维固定镜头，也不为“显得高级”堆无意义复杂动作。
 
