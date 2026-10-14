@@ -41,7 +41,7 @@ description: 模块化 Blender 生产 Skill。用于完整场景、复杂 Motion
 - Collection / 命名 / Scene Rig / Camera Rig / 工程结构 → `references/engineering/project-architecture.md`
 
 ### 导演与预演
-- 从零三维镜头 / 口播时间点 / 运镜编排 / 动态关键帧 / 三维空间感 → `references/workflows/dynamic-previs.md`
+- 从零三维镜头 / 分镜组接 / 景别与机位变化 / 切镜节奏 / 口播时间点 / 运镜编排 / 动态关键帧 / 三维空间感 → `references/workflows/dynamic-previs.md`
 
 ### Motion
 - 多对象共享运动 / Follow / Attach / Target / Camera / Path / Constraint → `references/motion/motion-rigging.md`
@@ -85,8 +85,8 @@ description: 模块化 Blender 生产 Skill。用于完整场景、复杂 Motion
 
 禁止用大量 key 代替曲线。
 
-**AI 应主动设计三维空间调度与镜头语言，而非只做二维排版或静态旋转。**
-先用可编辑 Camera Rig、Target、Focus、运动分段和动态 Previs 验证；复杂主曲线可在审核后由人工精修。
+**AI 应主动设计三维空间调度、镜头组接与剪辑节奏，而非只做二维排版、静态旋转或单一景别推拉。**
+对完整段落先决定何时连续运镜、何时切镜，再安排全/中/近/特写、机位与动静快慢反差；用可编辑 Camera Rig、Target、Focus 和已组接的动态 Previs 验证。复杂主曲线可在审核后由人工精修。
 
 ## 5｜Editable Skeleton
 
@@ -143,8 +143,8 @@ Motion Ownership：
 ## 8｜复杂执行
 
 1. 读取必要场景状态，已有工程先保护 Recovery Point。
-2. 锁定 Visual / Asset 输入；若是完整镜头，编排口播事件、摄影机/物体/焦点运动。
-3. 搭轻量 Engineering Skeleton + Proxy，制作**全时长动态 Previs**，审核视差、景别、节奏、遮挡与信息落点。
+2. 锁定 Visual / Asset 输入；若是完整段落，先编排口播事件、镜头编号/切点、景别、机位、摄影机/物体/焦点运动。
+3. 搭轻量 Engineering Skeleton + Proxy，制作**全时长且按实际切点组接的动态 Previs**，审核景别与机位变化、运镜/切镜节奏、视差、遮挡与信息落点。
 4. Previs 通过后完成 Primary Motion、Editable QA，再精修资产、材质、光影与 Secondary Motion。
 5. 代表帧测试 Eevee / Cycles 与渲染成本；按时间预算优化，不直接启动昂贵全片渲染。
 6. 按实际 AE 合成需要输出分层/蒙版/相机数据，检验交接帧。
@@ -164,7 +164,7 @@ Motion Ownership：
 - 主要控制入口 30 秒内能找到；
 - 差点控件只暴露真正会改的参数；
 - 工程脱离 Agent 仍能正常打开、理解、继续调整；
-- 完整镜头已通过动态 Previs，关键时间点与口播对齐且能方便重定时；
+- 完整段落已通过按实际切点组接的动态 Previs；景别、机位、运镜/切镜和动静节奏有叙事依据，关键时间点与口播对齐且能方便重定时；
 - 最终渲染方案经过代表帧测速，遵循预算或明确报告超时风险；
 - 需要 AE 合成时，摄影机/时间/Pass/遮罩已验证对齐；
 - 未经授权没有高成本完整渲染。
